@@ -1,0 +1,140 @@
+" =============================================================================
+" VIM Dotfile
+"
+" Creator: Dylan Sarber
+" Description:
+"   Built from and inspired by many of the lessons taught in Steve Losh's
+"   Learn VimScript The Hard Way (http://learnvimscriptthehardway.stevelosh.com)
+"   alongside my own many customizations for my various work and projects.
+"
+"   Lovingly commented for those looking to get started with their own `vimrc`
+"   hacking.
+"
+" Dependencies:
+"   * vim-pathogen - https://github.com/tpope/vim-pathogen
+"   * vim-sensible - https://github.com/tpope/vim-sensible
+"   * tender.vim   - https://github.com/jacoborus/tender.vim
+" =============================================================================
+
+" Pathogen's required bootstrapping call
+execute pathogen#infect()
+
+" General Settings ---------------------- {{{
+set shiftwidth=4
+set tabstop=4
+set expandtab
+
+set number
+set relativenumber
+
+set cb="unnamed"
+
+if (has("termguicolors"))
+    set termguicolors
+endif
+colorscheme tender
+
+set foldlevelstart=0
+" }}}
+
+" Platform Options ---------------------- {{{
+set shell=PowerShell
+set shellcmdflag=-Command
+" }}}
+
+" Mappings ---------------------- {{{
+map <SPACE> \
+let mapleader = '\'
+let maplocalleader = "\\"
+
+inoremap jk <ESC>
+inoremap <ESC> <NOP>
+
+" Buffer manipulation
+nnoremap <Leader>- :bprev<CR>
+nnoremap <Leader>= :bnext<CR>
+nnoremap <Leader>d :bdelete<CR>
+
+" Cursor movement
+nnoremap <S-h> 0
+nnoremap <S-l> $
+
+" Searching
+vnoremap <Leader>/ y/<C-R>"<CR>
+
+" Text editing
+nnoremap <Leader>p p=`]
+nnoremap <Leader>P P=`]
+"imap <C-u>   <ESC>:s/\v<(.)(\w*)/\u\1\L\2/g
+inoremap <C-S-u> <ESC>viw<S-u>ea
+
+nnoremap <Leader>" viw<ESC>a"<ESC>hbi"<ESC>lel
+nnoremap <Leader>' viw<ESC>a'<ESC>hbi'<ESC>lel
+vnoremap <Leader>" <ESC>`>a"<ESC>`<i"<ESC>lel
+vnoremap <Leader>' <ESC>`>a'<ESC>`<i'<ESC>lel
+
+vnoremap <Leader>( <ESC>`>a)<ESC>`<i(<ESC>lel
+vnoremap <Leader>) <ESC>`>a)<ESC>`<i(<ESC>lel
+
+" Handy shortcuts
+nnoremap <Leader>ev :split $MYVIMRC<CR>
+nnoremap <Leader>eg :split $MYGVIMRC<CR>
+nnoremap <Leader>sv :source $MYVIMRC<CR>
+nnoremap <Leader>sg :source $MYGVIMRC<CR>
+" }}}
+
+" Statusline ---------------------- {{{
+set statusline=%F       " Relative path to file (from cwd)
+set statusline+=\ %m    " Modified [+] flag
+set statusline+=\ %r    " Read-only [RO] flag
+set statusline+=\ %h    " Help file [Help] flag
+set statusline+=\ %w    " Preview [Preview] flag
+set statusline+=%=      " To the right!
+set statusline+=%y      " File type in buffer
+set statusline+=\ %4l   " Current line number
+set statusline+=/%L     " Total line count in buffer
+set statusline+=\ %c    " Column number
+set statusline+=%V      " Virtual column number (i.e. absolute column in buffer)
+set statusline+=\ %3p%% " Percentage through file
+" }}}
+
+" FileType Settings ---------------------- {{{
+
+" All ---------------------- {{{
+augroup filetype_all
+    autocmd!
+augroup END
+" }}}
+
+" VimScript ---------------------- {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+" Markdown ---------------------- {{{
+augroup filetype_markdown
+    autocmd!
+    autocmd FileType markdown setlocal spell spelllang=en_us
+    autocmd FileType markdown setlocal tw=80
+
+    autocmd FileType markdown setlocal statusline=Words:\ %{wordcount()['words']}
+augroup END
+" }}}
+
+" Ruby ---------------------- {{{
+augroup filetype_ruby
+    autocmd!
+    autocmd FileType ruby setlocal shiftwidth=2
+    autocmd FileType ruby setlocal tabstop=2
+    autocmd FileType ruby setlocal expandtab
+augroup END
+" }}}
+
+" }}}
+
+" Global Abbreviations ---------------------- {{{
+iabbrev @@ dylan.sarber@gmail.com
+" }}}
+
