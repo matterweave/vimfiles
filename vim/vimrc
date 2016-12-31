@@ -10,6 +10,7 @@
 "   Lovingly commented for those looking to get started with their own `vimrc`
 "   hacking.
 "
+" TODO(dylan): update these dependencies
 " Dependencies:
 "   * vim-pathogen - https://github.com/tpope/vim-pathogen
 "   * vim-sensible - https://github.com/tpope/vim-sensible
@@ -32,19 +33,27 @@ set cb="unnamed"
 if (has("termguicolors"))
     set termguicolors
 endif
-colorscheme tender
+set background=dark
+colorscheme pencil
 
+set nowrap
 set foldlevelstart=0
+
+set whichwrap=<,>,[,]
+" }}}
+
+" General Programming Settings -------------- {{{
+set cinoptions=(0,W4,:0
 " }}}
 
 " Platform Options ---------------------- {{{
-set shell=PowerShell
-set shellcmdflag=-Command
+"set shell=cmd
+"set shellcmdflag=-Command
 " }}}
 
 " Mappings ---------------------- {{{
-map <SPACE> \
-let mapleader = '\'
+map <SPACE> -
+let mapleader = '-'
 let maplocalleader = "\\"
 
 inoremap jk <ESC>
@@ -58,8 +67,17 @@ nnoremap <Leader>d :bdelete<CR>
 " Cursor movement
 nnoremap <S-h> 0
 nnoremap <S-l> $
+"nnoremap <S-j> <C-d>
+"nnoremap <S-k> <C-u>
+
+" Easier window jumping - no <C-w> needed for the first keystroke
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
 
 " Searching
+nnoremap <Leader>/ viwy/<C-R>"<CR>
 vnoremap <Leader>/ y/<C-R>"<CR>
 
 " Text editing
@@ -73,6 +91,10 @@ nnoremap <Leader>' viw<ESC>a'<ESC>hbi'<ESC>lel
 vnoremap <Leader>" <ESC>`>a"<ESC>`<i"<ESC>lel
 vnoremap <Leader>' <ESC>`>a'<ESC>`<i'<ESC>lel
 
+nnoremap <Leader>( vi(<ESC>`>a)<ESC>`<i(<ESC>%
+nnoremap <Leader>) vi(<ESC>`>a)<ESC>`<i(<ESC>%
+nnoremap <Leader>[ vi[<ESC>`>a]<ESC>`<i[<ESC>%
+nnoremap <Leader>] vi[<ESC>`>a]<ESC>`<i[<ESC>%
 vnoremap <Leader>( <ESC>`>a)<ESC>`<i(<ESC>lel
 vnoremap <Leader>) <ESC>`>a)<ESC>`<i(<ESC>lel
 
@@ -103,6 +125,12 @@ set statusline+=\ %3p%% " Percentage through file
 " All ---------------------- {{{
 augroup filetype_all
     autocmd!
+    autocmd VimEnter,WinEnter * highlight myNote guifg='#FFFFFF' guibg='#A89C14'
+    autocmd VimEnter,WinEnter * call matchadd('myNote', '\W\zs\(NOTE\)')
+    autocmd VimEnter,WinEnter * highlight myInternal guifg='#FFFFFF' guibg='#30C798'
+    autocmd VimEnter,WinEnter * call matchadd('myInternal', '\W\zs\(INTERNAL\)')
+    autocmd VimEnter,WinEnter * highlight myImportant guifg='#FFFFFF' guibg='#D75F5F'
+    autocmd VimEnter,WinEnter * call matchadd('myImportant', '\W\zs\(IMPORTANT\)')
 augroup END
 " }}}
 
@@ -123,12 +151,33 @@ augroup filetype_markdown
 augroup END
 " }}}
 
+" HTML ---------------------- {{{
+augroup filetype_html
+    autocmd!
+    autocmd FileType html setlocal shiftwidth=2
+    autocmd FileType html setlocal tabstop=2
+    autocmd FileType html setlocal expandtab
+augroup END
+" }}}
+
 " Ruby ---------------------- {{{
 augroup filetype_ruby
     autocmd!
     autocmd FileType ruby setlocal shiftwidth=2
     autocmd FileType ruby setlocal tabstop=2
     autocmd FileType ruby setlocal expandtab
+
+    autocmd FileType eruby setlocal shiftwidth=2
+    autocmd FileType eruby setlocal tabstop=2
+    autocmd FileType eruby setlocal expandtab
+augroup END
+" }}}
+
+" C / C++ ---------------------- {{{
+augroup filetype_cpp
+    autocmd!
+    autocmd FileType cpp nnoremap <buffer> <localleader>c :e %<.cpp<CR>
+    autocmd FileType cpp nnoremap <buffer> <localleader>h :e %<.h<CR>
 augroup END
 " }}}
 
@@ -136,5 +185,23 @@ augroup END
 
 " Global Abbreviations ---------------------- {{{
 iabbrev @@ dylan.sarber@gmail.com
+" }}}
+
+" Functions ---------------------- {{{
+
+" Recurse upwards from the current directory to find a build file.
+"function FindBuildfile()
+"    let filename = "build.bat"
+"    let cwd = execute("pwd")
+"
+"    "while cwd !~# "^[a-zA-Z]:\\$" && 
+"    "endwhile
+"endfunction
+
+" Build the current project using any discovered build file(s).
+"function Build()
+"    let buildfile = FindBuildfile()
+"    "normal! !buildfile
+"endfunction
 " }}}
 

@@ -13,3 +13,6 @@
 [submodule "vim\\bundle\\vim-sensible"]
 	path = vim\\bundle\\vim-sensible
 	url = git://github.com/tpope/vim-sensible.git
+[submodule "vim/bundle\\colors-pencil"]
+	path = vim/bundle\\colors-pencil
+	url = https://github.com/reedes/vim-colors-pencil.git
