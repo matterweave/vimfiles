@@ -34,10 +34,10 @@ if (has("termguicolors"))
     set termguicolors
 endif
 set background=dark
-colorscheme pencil
+colorscheme base16-tomorrow-night
 
 set nowrap
-set foldlevelstart=0
+set foldlevelstart=99
 
 set whichwrap=<,>,[,]
 " }}}
@@ -176,6 +176,7 @@ augroup END
 " C / C++ ---------------------- {{{
 augroup filetype_cpp
     autocmd!
+    autocmd FileType cpp set foldmethod=syntax
     autocmd FileType cpp nnoremap <buffer> <localleader>c :e %<.cpp<CR>
     autocmd FileType cpp nnoremap <buffer> <localleader>h :e %<.h<CR>
 augroup END
