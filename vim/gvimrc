@@ -1,5 +1,5 @@
 " General Settings
 " ----------------------
-set guifont=Consolas:h10
+set guifont=Consolas:h13
 set guioptions=erLt
 set linespace=6

@@ -12,9 +12,10 @@
 "
 " TODO(dylan): update these dependencies
 " Dependencies:
-"   * vim-pathogen - https://github.com/tpope/vim-pathogen
-"   * vim-sensible - https://github.com/tpope/vim-sensible
-"   * tender.vim   - https://github.com/jacoborus/tender.vim
+"   * vim-pathogen  - https://github.com/tpope/vim-pathogen
+"   * vim-sensible  - https://github.com/tpope/vim-sensible
+"   * vim-fugitive  - https://github.com/tpope/vim-fugitive
+"   * color pack    - https://github.com/rafi/awesome-vim-colorschemes
 " =============================================================================
 
 " Pathogen's required bootstrapping call
@@ -34,7 +35,7 @@ if (has("termguicolors"))
     set termguicolors
 endif
 set background=dark
-colorscheme base16-tomorrow-night
+colorscheme lucid
 
 set nowrap
 set foldlevelstart=99
@@ -85,6 +86,7 @@ nnoremap <Leader>p p=`]
 nnoremap <Leader>P P=`]
 "imap <C-u>   <ESC>:s/\v<(.)(\w*)/\u\1\L\2/g
 inoremap <C-S-u> <ESC>viw<S-u>ea
+"vnoremap <C-/> <ESC>
 
 nnoremap <Leader>" viw<ESC>a"<ESC>hbi"<ESC>lel
 nnoremap <Leader>' viw<ESC>a'<ESC>hbi'<ESC>lel
@@ -131,6 +133,8 @@ augroup filetype_all
     autocmd VimEnter,WinEnter * call matchadd('myInternal', '\W\zs\(INTERNAL\)')
     autocmd VimEnter,WinEnter * highlight myImportant guifg='#FFFFFF' guibg='#D75F5F'
     autocmd VimEnter,WinEnter * call matchadd('myImportant', '\W\zs\(IMPORTANT\)')
+    autocmd VimEnter,WinEnter * highlight myQuestion guifg='#FFFFFF' guibg='#6666FF'
+    autocmd VimEnter,WinEnter * call matchadd('myQuestion', '\W\zs\(QUESTION\)')
 augroup END
 " }}}
 
@@ -179,6 +183,15 @@ augroup filetype_cpp
     autocmd FileType cpp set foldmethod=syntax
     autocmd FileType cpp nnoremap <buffer> <localleader>c :e %<.cpp<CR>
     autocmd FileType cpp nnoremap <buffer> <localleader>h :e %<.h<CR>
+    autocmd FileType cpp vnoremap <buffer> <localleader>\ ^o^<C-v><S-i>// <ESC>
+    autocmd FileType cpp vnoremap <buffer> <localleader>\| ^o^<C-v>2ld<ESC>
+augroup END
+" }}}
+
+" Scheme / Racket ---------------------- {{{
+augroup filetype_scheme
+    autocmd!
+    autocmd FileType scheme set cinoptions&
 augroup END
 " }}}
 
@@ -204,5 +217,14 @@ iabbrev @@ dylan.sarber@gmail.com
 "    let buildfile = FindBuildfile()
 "    "normal! !buildfile
 "endfunction
+" }}}
+
+
+" Startup Commands ---------------------- {{{
+" TODO
+"  * Split into two vertical windows (or go down to 2 if more exist when sourcing)
+"  * Make sure the windows are equal
+"  * Split a third, thinner window on the left with netrw running
+"  * Move the cursor to netrw
 " }}}
 

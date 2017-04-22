@@ -13,3 +13,9 @@
 [submodule "vim\\bundle\\awesome-vim-colorschemes"]
 	path = vim\\bundle\\awesome-vim-colorschemes
 	url = https://github.com/rafi/awesome-vim-colorschemes.git
+[submodule "vim\\bundle\\vim-ruby"]
+	path = vim\\bundle\\vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "vim\\bundle\\vim-rails"]
+	path = vim\\bundle\\vim-rails
+	url = https://github.com/tpope/vim-rails.git
